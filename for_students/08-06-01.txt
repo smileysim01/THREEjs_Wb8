@@ -1,3 +1,11 @@
 Please describe the buildings you created in this file 08-06-01.txt
+Building 1: Pyramid Hip
+Building 2: Shed
 
 Explain how you made the buildings. 
+For both the buildings I made separate materials for different textures for the 4 base walls and roofs.
+Then I added unique textures to roofs of both buildings.
+For base, I used the house texture provided for adding doors and windows.
+For roof of building 1, I used UV_Grid_Sm.jpg provided.
+For roof of building 2, I downloaded a shed tiled texture from the web and used it.
+All the geometries are built from scratch using BufferGeometry only.

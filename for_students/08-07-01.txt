@@ -1,1 +1,6 @@
 Please describe the vehicles you created and how you made them in this file 08-07-01.txt
+I made a car which is more like a Mumbai Taxi.
+Used textures for tyres, windows, and the matte car body.
+I used different geometries for each part of the vehicle from scratch.
+I used Three.js documentation for geometries.
+My favorite part: Tyres
