@@ -158,273 +158,238 @@ class Object1 extends GrObject {
     super("Object1", pyramid_hip);
   }
 }
+
 class Object2 extends GrObject {
-  constructor() {
-    let bott_geometry = new T.BufferGeometry();
-    let roof_geometry = new T.BufferGeometry();
-
-    const vertices1 = new Float32Array( [
-        //for front
-        -1,-1,1,
-        1,-1,1,
-        -1,1,1,
-
-        -1,1,1,
-        1,-1,1,
-        1,1,1,
-
-        //for left
-        -1,-1,-1, 
-        -1,-1,1, 
-        -1,1,-1,
-
-        -1,1,-1,
-        -1,-1,1,
-        -1,1,1,
-
-        //for right
-        1,-1,1,
-        1,-1,-1,
-        1,1,1,
-
-        1,1,1,
-        1,-1,-1,
-        1,1,-1,
-
-        //for back
-        1,-1,-1,
-        -1,-1,-1,
-        1,1,-1,
-
-        1,1,-1,
-        -1,-1,-1,
-        -1,1,-1,
-    ])
-
-
-    const vertices2 = new Float32Array( [
-        //for top front
-        -1,1,1,
-        1,1,1,
-        0,2.5,0,
-
-        //for top left
-        -1,1,-1,
-        -1,1,1,
-        0,2.5,0,
-
-        //for top right
-        1,1,1,
-        1,1,-1,
-        0,2.5,0,
-
-        //for top back
-        1,1,-1,
-        -1,1,-1,
-        0,2.5,0
-    ]);
-
-    bott_geometry.setAttribute('position',new T.BufferAttribute(vertices1,3));
-    bott_geometry.computeVertexNormals();
-
-    roof_geometry.setAttribute('position',new T.BufferAttribute(vertices2,3));
-    roof_geometry.computeVertexNormals();
-
-    const uvs1 = new Float32Array([
-        //front
-        0.36,0,
-        0.64,0,
-        0.36,1,
-
-        0.36,1,
-        0.64,0,
-        0.64,1,
-
-        // left- 6
-        0.08,0,
-        0.4,0,
-        0.08,1,
-
-        0.08,1,
-        0.4,0,
-        0.4,1,
-
-        //right- 5
-        0.01,0.01,
-        0.02,0.01,
-        0.01,0.01,
-
-        0.01,0.01,
-        0.02,0.01,
-        0.02,0.01,
-
-        //back- 1
-        0.01,0.01,
-        0.02,0.01,
-        0.01,0.01,
-
-        0.01,0.01,
-        0.02,0.01,
-        0.02,0.01,
-    ])
-
-    const uvs2 = new Float32Array([
-        //top front
-        0.81,0.01,
-        0.02,0.01,
-        0.81,0.01,
-
-        //top left
-        0.81,0.01,
-        0.02,0.01,
-        0.81,0.01,
-
-        //top right
-        0.81,0.01,
-        0.02,0.01,
-        0.81,0.01,
-
-        //top back
-        0.81,0.01,
-        0.02,0.01,
-        0.81,0.01,
-    ])
-
-    bott_geometry.setAttribute('uv',new T.BufferAttribute(uvs1,2));
-    roof_geometry.setAttribute('uv',new T.BufferAttribute(uvs2,2));
-
-    // @@Snippet:texuse
-    let tl1 = new T.TextureLoader().load("../textures/house.png");
-    let bott_material = new T.MeshStandardMaterial({
-        color: "white",
-        roughness: 0.75,
-        map: tl1,
-        side: T.DoubleSide
-    });
-
-    // @@Snippet:texuse
-    let tl2 = new T.TextureLoader().load("../textures/UV_Grid_Sm.jpg");
-    let roof_material = new T.MeshStandardMaterial({
-        color: "white",
-        roughness: 0.75,
-        metalness: 0.5,
-        map: tl2,
-        side: T.DoubleSide
-    });
-
-    let bott_mesh = new T.Mesh(bott_geometry, bott_material);
-    let roof_mesh = new T.Mesh(roof_geometry, roof_material);
-    let pyramid_hip = new T.Group();
-    pyramid_hip.add(bott_mesh);
-    pyramid_hip.add(roof_mesh);
-    pyramid_hip.translateY(0.35);
-    pyramid_hip.scale.set(0.5,0.4,0.5);
-
-    //
-    super("Object2", pyramid_hip);
-  }
-}
-class Object3 extends GrObject {
-  constructor() {
-    let tl_base = new T.TextureLoader().load("../textures/metalic_blue.jpg");
-    let base_geometry = new T.BoxGeometry(4.5,1.8,8.5);
-    let base_material = new T.MeshStandardMaterial({color:"red",map:tl_base});
-    let base_mesh = new T.Mesh(base_geometry,base_material);
-    base_mesh.scale.set(0.2,0.2,0.2);
-    base_mesh.position.y = 0.1;
-
-    let tl_matte = new T.TextureLoader().load("../textures/matte.jpg");
-    const length = 12, width = 8;
-
-    const shape = new T.Shape();
-    shape.moveTo( 0,0 );
-    shape.lineTo( 0, width );
-    shape.lineTo( length, width );
-    shape.lineTo( length, 0 );
-    shape.lineTo( 0, 0 );
-
-    const extrudeSettings = {
-        steps: 1,
-        depth: 1,
-        bevelEnabled: true,
-        bevelThickness: 2,
-        bevelSize: 1,
-        bevelOffset: -2,
-        bevelSegments: 1
-    };
-    let top_geometry = new T.ExtrudeGeometry(shape,extrudeSettings);
-    let top_material = new T.MeshStandardMaterial({color:"yellow", map:tl_matte});
-    let top_mesh = new T.Mesh(top_geometry,top_material);
-    top_mesh.scale.set(0.12,0.12,0.12);
-    top_mesh.rotateX(Math.PI/2);
-    top_mesh.rotateZ(Math.PI/2);
-    top_mesh.position.z = -0.8;
-    top_mesh.position.y = 0.4;
-    top_mesh.position.x = 0.5;
-
-    let tl_glass = new T.TextureLoader().load("../textures/glass.jpg");
-
-    let tl_tyre = new T.TextureLoader().load("../textures/tyre.jpg");
-    let wheels = [];
-    let wheels_geometry = new T.TorusGeometry(1,0.5);
-    let wheels_material = new T.MeshStandardMaterial({color:"grey", roughness:0.75, map:tl_tyre});
-    for(let i = 0; i<4; i++){
-        wheels[i] = new T.Mesh(wheels_geometry, wheels_material);
-        wheels[i].scale.set(0.1,0.1,0.1);
-        wheels[i].rotateY(Math.PI/2);
-    }
-    wheels[0].position.set(0.5,-0.06,0.4);
-    wheels[1].position.set(0.5,-0.06,-0.4);
-    wheels[2].position.set(-0.5,-0.06,0.4);
-    wheels[3].position.set(-0.5,-0.06,-0.4);
-
-    let window_geometry = new T.BufferGeometry();
-    const vertices = new Float32Array([
-      //front window
-      -0.22,0.25,0.75,
-      0.28,0.25,0.75,
-      -0.22,0.65,0.4,
-
-      -0.22,0.65,0.4,
-      0.28,0.25,0.75,
-      0.28,0.65,0.4,
-
-      //right window
-      0.28,0.25,0.75,
-      0.4,0.25,0.5,
-      0.28,0.65,0.4,
-
-      //left window
-      -0.22,0.25,0.75,
-      -0.32,0.25,0.5,
-      -0.22,0.65,0.4
-    ])
-
-    window_geometry.setAttribute('position',new T.BufferAttribute(vertices,3));
-    window_geometry.computeVertexNormals();
-
-    let window_material = new T.MeshStandardMaterial({
-        color: "cyan",
-        map: tl_glass,
-        side: T.DoubleSide
-    });
-
-    let window_mesh = new T.Mesh(window_geometry, window_material);
+    constructor() {
+        let geometry = new T.BufferGeometry();
+  
+        const vertices = new Float32Array( [
+            //for front
+            -1,-1,1,
+            1,-1,1,
+            -1,1,1,
+  
+            -1,1,1,
+            1,-1,1,
+            1,1,1,
+  
+            //for left
+            -1,-1,-1, 
+            -1,-1,1, 
+            -1,1,-1,
+  
+            -1,1,-1,
+            -1,-1,1,
+            -1,1,1,
+  
+            //for right
+            1,-1,1,
+            1,-1,-1,
+            1,1,1,
+  
+            1,1,1,
+            1,-1,-1,
+            1,1,-1,
+  
+            //for back
+            1,-1,-1,
+            -1,-1,-1,
+            1,1,-1,
+  
+            1,1,-1,
+            -1,-1,-1,
+            -1,1,-1,
+  
+            //for bottom
+            1,-1,1,
+            -1,-1,1,
+            1,-1,-1,
+  
+            1,-1,-1,
+            -1,-1,1,
+            -1,-1,-1,
+  
+            //for top
+            1,1,-1,
+            -1,1,-1,
+            1,1,1,
+  
+            1,1,1,
+            -1,1,-1,
+            -1,1,1,
+        ]);
+        const colors = new Float32Array( [
+          0.2,0.51,0.3,    // yellow (3 vertices)
+          0.2,0.51,0.1,
+          0.3,0.51,0.1,
+          1,1,0,    // yellow (3 vertices)
+          1,1,0,
+          1,1,0,
+          1,1,0,    // yellow (3 vertices)
+          1,1,0,
+          1,1,0,
+          1,1,0,    // yellow (3 vertices)
+          1,1,0,
+          1,1,0,
+          1,1,0,    // yellow (3 vertices)
+          1,1,0,
+          1,1,0,
+          1,1,0,    // yellow (3 vertices)
+          1,1,0,
+          1,1,0,
+          1,1,0,    // yellow (3 vertices)
+          1,1,0,
+          1,1,0,
+          1,1,0,    // yellow (3 vertices)
+          1,1,0,
+          1,1,0,
+          1,1,0,    // yellow (3 vertices)
+          1,1,0,
+          1,1,0,
+          1,1,0,    // yellow (3 vertices)
+          1,1,0,
+          0.2,0.3,0,
+          1,0.2,0,    // yellow (3 vertices)
+          1,1,0,
+          1,1,0,
+          1,1,0,    // yellow (3 vertices)
+          1,1,0,
+          1,1,0,
+  
+  
+  
+      ]);
+      geometry.setAttribute("color",new T.BufferAttribute(colors,3));
+  
+        geometry.setAttribute('position',new T.BufferAttribute(vertices,3));
+        geometry.computeVertexNormals();
+  
+        const uvs = new Float32Array([
+            //front-3
+            1/3,0,
+            2/3,0,
+            1/3,1/3,
+  
+            1/3,1/3,
+            2/3,0,
+            2/3,1/3,
+  
+            // left- 6
+            2/3,0,
+            1,0,
+            2/3,1/3,
+  
+            2/3,1/3,
+            1,0,
+            1,1/3,
+  
+            //right- 5
+            2/3,1/3,
+            1,1/3,
+            2/3,2/3,
     
-    let car = new T.Group();
-    car.add(base_mesh);
-    car.add(top_mesh);
-    car.add(wheels[0]);
-    car.add(wheels[1]);
-    car.add(wheels[2]);
-    car.add(wheels[3]);
-    car.add(window_mesh);
-    car.translateY(0.35);
+            2/3,2/3,
+            1,1/3,
+            1,2/3,
+  
+            //back- 1
+            1/3,1/3,
+            2/3,1/3,
+            1/3,2/3,
+    
+            1/3,2/3,
+            2/3,1/3,
+            2/3,2/3,
+  
+            //bottom- 2
+            0,1/3,
+            1/3,1/3,
+            0,2/3,
+    
+            0,2/3,
+            1/3,1/3,
+            1/3,2/3,
+  
+            //top- 4
+            1/3,2/3,
+            2/3,2/3,
+            1/3,1,
+    
+            1/3,1,
+            2/3,2/3,
+            2/3,1
+        ])
+  
+        geometry.setAttribute('uv',new T.BufferAttribute(uvs,2));
+
+              // @@Snippet:texuse
+        let tl = new T.TextureLoader().load("../images/dice_texture.png");
+        let material = new T.MeshStandardMaterial({
+            color: "red",
+            vertexColors:true,
+            roughness: 0.75,
+            map: tl,
+            side: T.DoubleSide
+        });
+  
+        let mesh = new T.Mesh(geometry, material);
+        mesh.scale.set(0.5,0.5,0.5);
+        mesh.translateY(0.5);
+  
+        //
+        super("Object2", mesh);
+    }
+  }
+
+class Object3 extends GrObject {
+    constructor() {
+        let geometry = new T.BufferGeometry();
+        //
+        // while the two triangles have 4 certices, we need to split the vertices
+        // so that they can have different normals
+        const vertices = new Float32Array( [
+            -1, 1, -1,     // 1A note that we need to keep this ccw
+            0, 0, 0,       // 1B
+            0, 2, 0,       // 1C
+            1, 1, -1,      // second triangle
+        ]);
+        // don't ask where we learn to call this "position" and "normal"
+        // the only thing I can find is to read examples...
+        geometry.setAttribute('position',new T.BufferAttribute(vertices,3));
+
+        // set the indecies - our triangles are 0 1 2 and 3,2,1
+        geometry.setIndex([0,1,2, 3,2,1]);
+
+        // Let THREE do this for us
+        geometry.computeVertexNormals();
+
+        let material = new T.MeshStandardMaterial({
+        color: "red",
+        roughness: 0.75,
+        side:T.DoubleSide
+        });
+
+        let mesh = new T.Mesh(geometry, material);
+        mesh.translateY(2);
+
+        const mat = new T.LineBasicMaterial( { color: 0x0000ff } );
+        const points = [];
+        points.push( new T.Vector3( 0, 0, 0 ) );
+        points.push( new T.Vector3( 0, -2, 0 ) );
+
+        const geom = new T.BufferGeometry().setFromPoints( points );
+        const line = new T.Line( geom, mat );
+        line.translateY(2);
+
+
+        let kite = new T.Group();
+        kite.add(mesh);
+        kite.add(line);
 
         //
-    super("Object3", car);
+        super("Object3", kite);
+    }
   }
-}
 
 // translate an object in the X direction
 function shift(grobj, x) {
